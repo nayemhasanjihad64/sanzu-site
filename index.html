@@ -13,14 +13,41 @@
         }
 
         body {
-            background-color: #fdfafb;
+            /* হালকা গোলাপি ব্যাকগ্রাউন্ড */
+            background-color: #fff5f7; 
             color: #333;
             text-align: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ব্যাকগ্রাউন্ডে ভাসমান হার্ট এনিমেশন */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.2);
+            font-size: 20px;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         header {
             padding: 50px 20px;
-            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         .heart-logo {
@@ -33,6 +60,7 @@
             align-items: center;
             position: relative;
             margin-bottom: 20px;
+            background: white;
         }
 
         .heart-logo::after {
@@ -47,7 +75,7 @@
         .logo-text {
             position: relative;
             z-index: 2;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: #444;
         }
@@ -78,15 +106,20 @@
         .photo-card {
             background: white;
             padding: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-radius: 5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
         }
 
         .photo-card img {
             width: 100%;
             height: 400px;
             object-fit: cover;
-            border-radius: 3px;
+            border-radius: 10px;
             background-color: #eee;
         }
 
@@ -94,12 +127,12 @@
             margin-top: 15px;
             font-size: 16px;
             color: #555;
+            font-weight: bold;
         }
 
         footer {
             padding: 40px;
-            background: #fff;
-            border-top: 1px solid #eee;
+            background: rgba(255, 255, 255, 0.8);
             margin-top: 50px;
         }
 
@@ -113,11 +146,12 @@
 </head>
 <body>
 
+    <div class="bg-hearts" id="heart-container"></div>
+
     <header>
         <div class="heart-logo">
-            <div class="logo-text">Sanzu and Namu</div>
+            <div class="logo-text">Sanzu & Namu</div>
         </div>
-        
         <h2 class="wedding-title">Sanzu and Namu</h2>
         <div class="date-range">January 2025 to February 2026</div>
         <div class="red-ribbon"></div>
@@ -128,12 +162,10 @@
             <img src="sanzu.jpg" alt="Sanzu">
             <p>আমাদের সুন্দর মুহূর্ত</p>
         </div>
-
         <div class="photo-card">
             <img src="san.jpg" alt="San">
             <p>জানুয়ারি ২০২৫ থেকে শুরু</p>
         </div>
-
         <div class="photo-card">
             <img src="love.jpg" alt="Love">
             <p>ফেব্রুয়ারি ২০২৬ পর্যন্ত পথচলা</p>
@@ -143,6 +175,23 @@
     <footer>
         <p>Created with Love by Namu</p>
     </footer>
+
+    <script>
+        // জাভাস্ক্রিপ্ট দিয়ে অনেকগুলো ভাসমান হার্ট তৈরি করা
+        const container = document.getElementById('heart-container');
+        const heartIcons = ['❤', '♥', '❣', '💕'];
+
+        for (let i = 0; i < 25; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.opacity = Math.random();
+            container.appendChild(heart);
+        }
+    </script>
 
 </body>
 </html>
